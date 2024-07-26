@@ -54,7 +54,7 @@ function App() {
 
   // Firestore CRUD
   const handleFirestoreAdd = async () => {
-    await addDoc(collection(firestore, "users"), {
+    await addDoc(collection(firestore, "users", inputData.id), {
       id: inputData.id,
       username: inputData.name,
       email: inputData.email
