@@ -52,9 +52,9 @@ function App() {
     remove(ref(database, 'users/' + id));
   };
 
-  // Firestore CRUD
+  // Firestore CRUD   , `name${i+1}`
   const handleFirestoreAdd = async () => {
-    await addDoc(collection(firestore, "users", inputData.id), {
+    await addDoc(collection(firestore, "users", `inputData.id`), {
       id: inputData.id,
       username: inputData.name,
       email: inputData.email
