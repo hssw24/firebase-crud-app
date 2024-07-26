@@ -4,7 +4,7 @@ import { ref, set, update, remove, onValue } from "firebase/database";
 import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from "firebase/firestore";
 
 function App() {
-  const [realtimeData, setRealtimeData] = useState([]);
+  const [realtimeData, setRealtimeData] = useState([]); 
   const [firestoreData, setFirestoreData] = useState([]);
   const [inputData, setInputData] = useState({ id: '', name: '', email: '' });
 
