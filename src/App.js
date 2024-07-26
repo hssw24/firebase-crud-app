@@ -8,6 +8,15 @@ function App() {
   const [firestoreData, setFirestoreData] = useState([]);
   const [inputData, setInputData] = useState({ id: '', name: '', email: '' });
 
+
+  service cloud.firestore {
+    match /databases/{database}/documents {
+      match /{document=**} {
+        allow read, write: if true;
+      }
+    }
+  }
+
   // Fetch Realtime Database Data
   useEffect(() => {
     const dbRef = ref(database, 'users/');
