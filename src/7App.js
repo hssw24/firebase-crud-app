@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { database, firestore } from './firebase';
 import { ref, set, update, remove, onValue } from "firebase/database";
-import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, getDoc, writeBatch } from "firebase/firestore";
+import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, getDoc, setDoc } from "firebase/firestore";
 
 function App() {
   const [realtimeData, setRealtimeData] = useState([]);
@@ -93,7 +93,7 @@ function App() {
 
   const handleFirestoreDeleteAll = async () => {
     const querySnapshot = await getDocs(collection(firestore, "users"));
-    const batch = writeBatch(firestore);
+    const batch = firestore.batch();
     querySnapshot.forEach((doc) => {
       batch.delete(doc.ref);
     });
