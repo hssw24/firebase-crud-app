@@ -12,6 +12,14 @@ const firebaseConfig = {
   appId: "1:866134153595:web:cbfe3e35c40b2a4e6a05de"
 };
 
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}
+
 /*
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
