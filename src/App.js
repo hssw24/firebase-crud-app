@@ -63,12 +63,13 @@ function App() {
   };
 
   const handleFirestoreUpdate = async (id) => {
+    console.log("UPD"+id);
+
     try {
       const userDocRef = doc(firestore, "users", id);
       const userDoc = await getDoc(userDocRef);
       if (userDoc.exists()) { 
         await updateDoc(userDocRef, {
-          id: inputData.id,
           username: inputData.name,
           email: inputData.email
         });
@@ -83,6 +84,8 @@ function App() {
   };
 
   const handleFirestoreDelete = async (id) => {
+    console.log("DEL"+id);
+
     const userDoc = doc(firestore, "users", id);
     await deleteDoc(userDoc);
     fetchFirestoreData(); // Reload Firestore data after deleting
