@@ -65,9 +65,9 @@ function App() {
   const handleFirestoreUpdate = async (id) => {
     try {
       const userDocRef = doc(firestore, "users", id);
-      const userDoc = await getDoc(userDocRef.id);
-      if (userDoc.exists()) {
-        await updateDoc(userDocRef.id, {
+      const userDoc = await getDoc(userDocRef);
+      if (userDocRef.exists()) { //Ref ergänzt
+        await updateDoc(userDocRef, {
           username: inputData.name,
           email: inputData.email
         });
