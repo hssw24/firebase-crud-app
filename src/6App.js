@@ -52,12 +52,9 @@ function App() {
     remove(ref(database, 'users/' + id));
   };
 
-  const handleRealtimeDeleteAll = () => {
-    remove(ref(database, 'users/'));
-  };
-
   // Firestore CRUD
   const handleFirestoreAdd = async () => {
+    // If you want to set a custom document ID, you can use setDoc instead of addDoc
     const docRef = doc(firestore, "users", inputData.id);
     await setDoc(docRef, {
       username: inputData.name,
@@ -91,16 +88,6 @@ function App() {
     fetchFirestoreData(); // Reload Firestore data after deleting
   };
 
-  const handleFirestoreDeleteAll = async () => {
-    const querySnapshot = await getDocs(collection(firestore, "users"));
-    const batch = firestore.batch();
-    querySnapshot.forEach((doc) => {
-      batch.delete(doc.ref);
-    });
-    await batch.commit();
-    fetchFirestoreData(); // Reload Firestore data after deleting all
-  };
-
   return (
     <div className="App">
       <h1>Firebase CRUD App</h1>
@@ -111,7 +98,6 @@ function App() {
         <input type="email" name="email" placeholder="Email" value={inputData.email} onChange={handleInputChange} />
         <button onClick={handleRealtimeAdd}>Add</button>
         <button onClick={handleRealtimeUpdate}>Update</button>
-        <button onClick={handleRealtimeDeleteAll}>Delete All</button>
         <ul>
           {realtimeData.map(user => (
             <li key={user.id}>
@@ -129,7 +115,6 @@ function App() {
         <input type="email" name="email" placeholder="Email" value={inputData.email} onChange={handleInputChange} />
         <button onClick={handleFirestoreAdd}>Add</button>
         <button onClick={() => handleFirestoreUpdate(inputData.id)}>Update</button>
-        <button onClick={handleFirestoreDeleteAll}>Delete All</button>
         <ul>
           {firestoreData.map(user => (
             <li key={user.id}>
