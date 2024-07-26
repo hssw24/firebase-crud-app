@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { database, firestore } from './firebase';
 import { ref, set, update, remove, onValue } from "firebase/database";
-import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, getDoc, setDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, getDoc } from "firebase/firestore";
 
 function App() {
   const [realtimeData, setRealtimeData] = useState([]);
@@ -52,11 +52,10 @@ function App() {
     remove(ref(database, 'users/' + id));
   };
 
-  // Firestore CRUD
+  // Firestore CRUD   , `name${i+1}`
   const handleFirestoreAdd = async () => {
-    // If you want to set a custom document ID, you can use setDoc instead of addDoc
-    const docRef = doc(firestore, "users", inputData.id);
-    await setDoc(docRef, {
+    await addDoc(collection(firestore, "users"), {
+      id: inputData.id,
       username: inputData.name,
       email: inputData.email
     });
@@ -64,10 +63,12 @@ function App() {
   };
 
   const handleFirestoreUpdate = async (id) => {
+    console.log("UPD"+id);
+
     try {
       const userDocRef = doc(firestore, "users", id);
       const userDoc = await getDoc(userDocRef);
-      if (userDoc.exists()) {
+      if (userDoc.exists()) { 
         await updateDoc(userDocRef, {
           username: inputData.name,
           email: inputData.email
@@ -83,6 +84,8 @@ function App() {
   };
 
   const handleFirestoreDelete = async (id) => {
+    console.log("DEL"+id);
+
     const userDoc = doc(firestore, "users", id);
     await deleteDoc(userDoc);
     fetchFirestoreData(); // Reload Firestore data after deleting
@@ -101,7 +104,7 @@ function App() {
         <ul>
           {realtimeData.map(user => (
             <li key={user.id}>
-              {user.username} - {user.email}
+              {user.id} + {user.username} - {user.email}
               <button onClick={() => handleRealtimeDelete(user.id)}>Delete</button>
             </li>
           ))}
@@ -118,7 +121,7 @@ function App() {
         <ul>
           {firestoreData.map(user => (
             <li key={user.id}>
-              {user.username} - {user.email}
+              {user.id} + {user.username} - {user.email}
               <button onClick={() => handleFirestoreDelete(user.id)}>Delete</button>
             </li>
           ))}
