@@ -100,7 +100,7 @@ function App() {
         <ul>
           {realtimeData.map(user => (
             <li key={user.id}>
-              {user.username} - {user.email}
+              {user.id} + {user.username} - {user.email}
               <button onClick={() => handleRealtimeDelete(user.id)}>Delete</button>
             </li>
           ))}
@@ -117,7 +117,7 @@ function App() {
         <ul>
           {firestoreData.map(user => (
             <li key={user.id}>
-              {user.username} - {user.email}
+              {user.id} + {user.username} - {user.email}
               <button onClick={() => handleFirestoreDelete(user.id)}>Delete</button>
             </li>
           ))}
