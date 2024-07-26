@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { database, firestore } from './firebase';
 import { ref, set, update, remove, onValue } from "firebase/database";
-import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, getDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from "firebase/firestore";
 
 function App() {
   const [realtimeData, setRealtimeData] = useState([]);
   const [firestoreData, setFirestoreData] = useState([]);
   const [inputData, setInputData] = useState({ id: '', name: '', email: '' });
+
 
   // Fetch Realtime Database Data
   useEffect(() => {
@@ -63,22 +64,12 @@ function App() {
   };
 
   const handleFirestoreUpdate = async (id) => {
-    try {
-      const userDocRef = doc(firestore, "users", id);
-      const userDoc = await getDoc(userDocRef);
-      if (userDoc.exists()) {
-        await updateDoc(userDocRef, {
-          username: inputData.name,
-          email: inputData.email
-        });
-        console.log("Document updated with ID: ", id);
-        fetchFirestoreData(); // Reload Firestore data after updating
-      } else {
-        console.error("No document to update with ID: ", id);
-      }
-    } catch (e) {
-      console.error("Error updating document: ", e);
-    }
+    const userDoc = doc(firestore, "users", id);
+    await updateDoc(userDoc, {
+      username: inputData.name,
+      email: inputData.email
+    });
+    fetchFirestoreData(); // Reload Firestore data after updating
   };
 
   const handleFirestoreDelete = async (id) => {
