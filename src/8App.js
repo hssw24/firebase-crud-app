@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { database, firestore } from './firebase';
 import { ref, set, update, remove, onValue } from "firebase/database";
-import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, getDoc, writeBatch, setDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, getDoc, writeBatch } from "firebase/firestore";
 
 function App() {
   const [realtimeData, setRealtimeData] = useState([]);
